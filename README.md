@@ -63,6 +63,7 @@ Collected from 2026 onwards with the Qur'an LLM Runner, a Streamlit app built fo
 |---|---|---|---|---|---|
 | `claude-haiku-5-5` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
 | `gpt-5-mini-2025-08-07` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
+| `gemini-3.1-flash-lite` | Google | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
 
 **File structure (2026 onwards):** UTF-8 with BOM, comma-separated, 9 columns.
 
