@@ -24,21 +24,21 @@ Collected with a Python script in 2024, using default settings (temperature not 
 
 | Model | Short name | Company | Date of collection (2024) | File |
 |---|---|---|---|---|
-| GPT-4o | GPT-4o | OpenAI | 14–16 May | `[file]` |
-| GPT-4 Turbo | GPT-4 | OpenAI | 16–18 April | `[file]` |
-| GPT-3.5 Turbo | GPT-3.5 | OpenAI | 15–16 April | `[file]` |
-| GPT-4o mini | GPT-4o mini | OpenAI | 5 November | `[file]` |
-| Claude 3 Haiku | Haiku | Anthropic | 17 March – 4 April | `[file]` |
-| Claude 3 Sonnet | Sonnet 3 | Anthropic | 18–19 April | `[file]` |
-| Claude 3 Opus | Opus | Anthropic | 19–22 April | `[file]` |
-| Claude 3.5 Sonnet | Sonnet 3.5 | Anthropic | 4–5 November | `[file]` |
-| Grok-2 | Grok-2 | xAI | 22 December | `[file]` |
-| Gemini 1.5 Pro | Gemini 1.5 Pro | Google | 21 December | `[file]` |
-| Gemini 1.5 Flash | Gemini 1.5 Flash | Google | 20 December | `[file]` |
-| Gemini 2.0 Flash Experimental | Gemini 2.0 Flash | Google | 20 December | `[file]` |
-| Mixtral 8x7B | Mixtral | Mistral AI (via Groq) | 11–15 April | `Mixtral.csv` |
-| Llama 2 70B | Llama 2 | Meta (via Groq) | 10–11 April | `[file]` |
-| Llama 3 70B | Llama 3 | Meta (via Groq) | 24–25 April | `[file]` |
+| GPT-4o | GPT-4o | OpenAI | 14–16 May | `GPT-4o.csv` |
+| GPT-4 Turbo | GPT-4 | OpenAI | 16–18 April | `GPT-4_Turbo.csv` |
+| GPT-3.5 Turbo | GPT-3.5 | OpenAI | 15–16 April | `GPT-3.5_Turbo.csv` |
+| GPT-4o mini | GPT-4o mini | OpenAI | 5 November | `GPT-4o_Mini.csv` |
+| Claude 3 Haiku | Haiku | Anthropic | 17 March – 4 April | `Claude_3_haiku.csv` |
+| Claude 3 Sonnet | Sonnet 3 | Anthropic | 18–19 April | `Claude_3_sonnet.csv` |
+| Claude 3 Opus | Opus | Anthropic | 19–22 April | `Claude_3_opus.csv` |
+| Claude 3.5 Sonnet | Sonnet 3.5 | Anthropic | 4–5 November | `Claude_3.5_sonnet.csv` |
+| Grok-2 | Grok-2 | xAI | 22 December | `Grok-2.csv` |
+| Gemini 1.5 Pro | Gemini 1.5 Pro | Google | 21 December | `Gemini_1.5_Pro.csv` |
+| Gemini 1.5 Flash | Gemini 1.5 Flash | Google | 20 December | `Gemini_1.5_Flash.csv` |
+| Gemini 2.0 Flash Experimental | Gemini 2.0 Flash | Google | 20 December | `Gemini_2.0_Flash_Experimental.csv` |
+| Mixtral 8x7B | Mixtral | Mistral AI (via Groq) | 11–15 April | `Mixtral_8X7B.csv` |
+| Llama 2 70B | Llama 2 | Meta (via Groq) | 10–11 April | `Llama_2_70B.csv` |
+| Llama 3 70B | Llama 3 | Meta (via Groq) | 24–25 April | `Llama_3_70B.csv` |
 
 **File structure (2024):** UTF-8, comma-separated, 6 columns.
 
@@ -52,8 +52,8 @@ Collected with a Python script in 2024, using default settings (temperature not 
 | `orig` | The unvoweled Arabic verse sent to the model |
 
 Notes:
-- Some cells may be empty where a model returned no translation (e.g. 6 verses in `Mixtral.csv`).
-- The Gemini models initially refused some verses, citing copyright. These were re-requested up to ten times. Verses still refused after that are left empty: Gemini 2.0 Flash, Q 2:168, 7:155, 23:117 and 33:5; Gemini 1.5 Pro, Q 6:19.
+- Where a model returned no translation, the cells hold placeholder text rather than being empty. In `Mixtral_8X7B.csv`, 6 verses (Q 42:2, 44:46, 52:3, 55:2, 55:64, 56:78) have `None` as translation and `No interpretation` as interpretation.
+- The Gemini models initially refused some verses, citing copyright. These were re-requested up to ten times. Verses still refused after that have `Copyright` in the `translation` column: Gemini 2.0 Flash, Q 2:168, 7:155, 23:117 and 33:5; Gemini 1.5 Pro, Q 6:19.
 
 ## Collection 2: later models
 
@@ -61,11 +61,15 @@ Collected from 2026 onwards with the Qur'an LLM Runner, a Streamlit app built fo
 
 | Model ID | Company | Date of collection | Mode | Temperature | File |
 |---|---|---|---|---|---|
-| `claude-haiku-5-5` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
-| `gpt-5-mini-2025-08-07` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
-| `gemini-3.1-flash-lite` | Google | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
-| `claude-haiku-4-5-20251001` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
-| `gpt-4.1-mini-2025-04-14` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `[file]` |
+| `claude-haiku-5-5` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `Claude_5.5_haiku.csv` |
+| `gpt-5-mini-2025-08-07` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `GPT-5_Mini.csv` |
+| `gemini-3.1-flash-lite` | Google | 22 October 2026 | translate and interpret | `[default]` | `Gemini_3.1_Flash_Lite.csv` |
+| `claude-haiku-4-5-20251001` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `Claude_4.5_haiku.csv` |
+| `gpt-4.1-mini-2025-04-14` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `GPT-4.1_Mini.csv` |
+
+Refusals (`status` = `refused`, reason in `detail`):
+- `gemini-3.1-flash-lite`: 46 verses, all `finish_reason=RECITATION`: Q 2:143, 2:164, 2:177, 2:258, 2:262, 2:264, 2:275, 2:282, 2:286, 3:159, 3:191, 4:1, 4:35, 4:66, 4:74, 4:75, 4:100, 4:122, 4:135, 5:3, 5:4, 5:8, 5:12, 5:33, 5:48, 6:38, 6:93, 7:32, 9:60, 9:111, 11:88, 13:3, 14:32, 16:97, 17:44, 18:57, 24:35, 30:41, 33:35, 38:26, 49:9, 49:12, 58:11, 59:7, 60:8, 73:20.
+- `gpt-4.1-mini-2025-04-14`: 1 verse, `finish_reason=content_filter`: Q 8:60.
 
 **File structure (2026 onwards):** UTF-8 with BOM, comma-separated, 9 columns.
 
