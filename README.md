@@ -57,7 +57,7 @@ Notes:
 
 ## Collection 2: later models
 
-Collected from 2026 onwards with the Qur'an LLM Runner, a Streamlit app built for follow-up studies using the same source text and prompt.
+Collected from 2026 onwards with the Qur'an LLM Runner, a Streamlit app built for follow-up studies using the same source text and prompt. All runs used a limit of 4,096 output tokens per verse; for reasoning models this limit includes the reasoning tokens.
 
 | Model ID | Company | Date of collection | Mode | Temperature | File |
 |---|---|---|---|---|---|
@@ -66,12 +66,18 @@ Collected from 2026 onwards with the Qur'an LLM Runner, a Streamlit app built fo
 | `gemini-3.1-flash-lite` | Google | 22 October 2026 | translate and interpret | `[default]` | `Gemini_3.1_Flash_Lite.csv` |
 | `claude-haiku-4-5-20251001` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `Claude_4.5_haiku.csv` |
 | `gpt-4.1-mini-2025-04-14` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `GPT-4.1_Mini.csv` |
+| `gpt-5.6-luna` | OpenAI | 23 October 2026 | translate and interpret | `[default]` | `GPT-5.6_Luna.csv` |
+| `gpt-6-luna` | OpenAI | 23 October 2026 | translate and interpret | `[default]` | `GPT-6_Luna.csv` |
+| `deepseek/deepseek-v4.1-flash` | DeepSeek (via OpenRouter) | 25 October 2026 | translate and interpret | `[default]` | `deepseek_v4.1-flash.csv` |
 
 Refusals (`status` = `refused`, reason in `detail`):
 - `gemini-3.1-flash-lite`: 46 verses, all `finish_reason=RECITATION`: Q 2:143, 2:164, 2:177, 2:258, 2:262, 2:264, 2:275, 2:282, 2:286, 3:159, 3:191, 4:1, 4:35, 4:66, 4:74, 4:75, 4:100, 4:122, 4:135, 5:3, 5:4, 5:8, 5:12, 5:33, 5:48, 6:38, 6:93, 7:32, 9:60, 9:111, 11:88, 13:3, 14:32, 16:97, 17:44, 18:57, 24:35, 30:41, 33:35, 38:26, 49:9, 49:12, 58:11, 59:7, 60:8, 73:20.
 - `gpt-4.1-mini-2025-04-14`: 1 verse, `finish_reason=content_filter`: Q 8:60.
 
-**File structure (2026 onwards):** UTF-8 with BOM, comma-separated, 9 columns.
+Failed answers (`status` = `parse_failed`):
+- `deepseek/deepseek-v4.1-flash`: 2 verses, Q 26:93 and 38:68, each tried 10 times. In every attempt the model used the whole 4,096-token limit on reasoning, so no complete answer was returned (`finish_reason=length`). OpenRouter lists `high` as this model's default reasoning level (checked 25 October 2026).
+
+**File structure (2026 onwards):** UTF-8 with BOM, comma-separated, 11 columns (12 in files collected via OpenRouter, which add `served_by` at the end).
 
 | Column | Content |
 |---|---|
@@ -84,12 +90,15 @@ Refusals (`status` = `refused`, reason in `detail`):
 | `interpretation` | The model's interpretation (empty in translate-only runs) |
 | `detail` | Error or refusal message, if any |
 | `model_id` | The exact model identifier used in the API request |
+| `reasoning_effort` | The reasoning level requested. `default` means none was set, so the provider's default for that model applied (the providers do not report which level that was) |
+| `reasoning_tokens` | Tokens the model spent on internal reasoning ("thinking") for the stored answer, as reported by the provider. Empty when the provider reports no count (here: `gemini-3.1-flash-lite` and `claude-haiku-4-5-20251001`); `0` means it reported none used |
+| `served_by` | Only in files collected via OpenRouter: the company that actually ran the model for that verse (OpenRouter routes each request to one of several hosting companies) |
 
 ## Differences between the two collections
 
 - **Common columns:** `chapter`, `verse`, `translation` and `interpretation` are present in both formats, so the files can be read together by column name.
 - **Arabic text:** included only in the 2024 files (`orig`). The newer files can be joined with the tanzil text on `chapter` and `verse`.
-- **Model and run information:** in the 2024 files, the model is given only by the filename and the table above. The newer files record the model ID, status and number of attempts for each verse.
+- **Model and run information:** in the 2024 files, the model is given only by the filename and the table above. The newer files record the model ID, status, number of attempts, reasoning level and reasoning tokens for each verse.
 - **Encoding:** the newer files start with a byte order mark (BOM) for compatibility with Excel. Read them with `encoding="utf-8-sig"` in Python.
 
 ## Copyright and use
