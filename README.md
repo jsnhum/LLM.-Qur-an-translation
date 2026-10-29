@@ -156,3 +156,9 @@ Prices are standard (non-batch) list prices. OpenRouter prices were checked on 2
 ## Copyright and use
 
 The outputs are published for research purposes. Note that model outputs may contain passages identical to existing, copyrighted human translations. The article documents this for Sahih International in particular.
+
+## Funding
+
+This collection is funded by Riksbankens Jubileumsfond (RJ), the Swedish foundation for humanities and social sciences.
+
+<img src="assets/rj_logo.png" alt="Riksbankens Jubileumsfond" width="300">
