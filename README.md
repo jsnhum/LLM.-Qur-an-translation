@@ -57,25 +57,75 @@ Notes:
 
 ## Collection 2: later models
 
-Collected from 2026 onwards with the Qur'an LLM Runner, a Streamlit app built for follow-up studies using the same source text and prompt. All runs used a limit of 4,096 output tokens per verse; for reasoning models this limit includes the reasoning tokens.
+Collected from 2026 onwards with the Qur'an LLM Runner, a Streamlit app built for follow-up studies using the same source text and prompt. All runs used the translate-and-interpret prompt above, the provider's default temperature, and a limit of 4,096 output tokens per verse (for reasoning models this limit includes the reasoning tokens).
 
-| Model ID | Company | Date of collection | Mode | Temperature | File |
-|---|---|---|---|---|---|
-| `claude-haiku-5-5` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `Claude_5.5_haiku.csv` |
-| `gpt-5-mini-2025-08-07` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `GPT-5_Mini.csv` |
-| `gemini-3.1-flash-lite` | Google | 22 October 2026 | translate and interpret | `[default]` | `Gemini_3.1_Flash_Lite.csv` |
-| `claude-haiku-4-5-20251001` | Anthropic | 22 October 2026 | translate and interpret | `[default]` | `Claude_4.5_haiku.csv` |
-| `gpt-4.1-mini-2025-04-14` | OpenAI | 22 October 2026 | translate and interpret | `[default]` | `GPT-4.1_Mini.csv` |
-| `gpt-5.6-luna` | OpenAI | 23 October 2026 | translate and interpret | `[default]` | `GPT-5.6_Luna.csv` |
-| `gpt-6-luna` | OpenAI | 23 October 2026 | translate and interpret | `[default]` | `GPT-6_Luna.csv` |
-| `deepseek/deepseek-v4.1-flash` | DeepSeek (via OpenRouter) | 25 October 2026 | translate and interpret | `[default]` | `deepseek_v4.1-flash.csv` |
+| Model ID | Company | Date of collection (2026) | Reasoning level | File |
+|---|---|---|---|---|
+| `claude-haiku-5-5` | Anthropic | 22 October | default | `Claude_5.5_haiku.csv` |
+| `gpt-5-mini-2025-08-07` | OpenAI | 22 October | default | `GPT-5_Mini.csv` |
+| `gemini-3.1-flash-lite` | Google | 22 October | default | `Gemini_3.1_Flash_Lite.csv` |
+| `claude-haiku-4-5-20251001` | Anthropic | 22 October | default (no reasoning) | `Claude_4.5_haiku.csv` |
+| `gpt-4.1-mini-2025-04-14` | OpenAI | 22 October | – (not a reasoning model) | `GPT-4.1_Mini.csv` |
+| `gpt-5.6-luna` | OpenAI | 23 October | default | `GPT-5.6_Luna.csv` |
+| `gpt-6-luna` | OpenAI | 23 October | default | `GPT-6_Luna.csv` |
+| `deepseek/deepseek-v4.1-flash` | DeepSeek (via OpenRouter) | 25 October | default | `DeepSeek_V4.1_Flash.csv` |
+| `meta-llama/llama-3.3-70b-instruct` | Meta (via OpenRouter) | 25 October | – (not a reasoning model) | `Llama_3.3_70B.csv` |
+| `meta-llama/llama-4-maverick` | Meta (via OpenRouter) | 27–28 October | – (not a reasoning model) | `Llama_4_Maverick.csv` |
+| `minimax/minimax-m3` | MiniMax (via OpenRouter) | 28 October | default | `MiniMax_M3.csv` |
+| `mistralai/mistral-small-2603` (Mistral Small 4) | Mistral AI (via OpenRouter) | 28–29 October | default | `Mistral_Small_4.csv` |
+| `claude-sonnet-4-5-20250929` | Anthropic | 29 October | default (no reasoning) | `Claude_4.5_sonnet.csv` |
+| `claude-sonnet-4-6` | Anthropic | 29 October | default (no reasoning) | `Claude_4.6_sonnet.csv` |
+| `claude-sonnet-5` | Anthropic | 29 October | default | `Claude_5_sonnet.csv` |
+| `claude-sonnet-5-5` | Anthropic | 29 October | low | `Claude_5.5_sonnet.csv` |
+
+"Default" means no reasoning level was set, so the provider's default for that model applied. For Claude Haiku 4.5, Sonnet 4.5 and Sonnet 4.6, reasoning ("extended thinking") is off unless requested, so these runs used none.
+
+Answer format: the models were asked for a JSON object with `translation` and `interpretation`, enforced through each API's structured-output setting. Exceptions:
+- `meta-llama/llama-3.3-70b-instruct`: the format was requested in the prompt instead (the app's "Ask for the format in the prompt" setting).
+- `deepseek/deepseek-v4.1-flash`: collected in OpenRouter's batch mode, where the serving company (Sail Research, 6,220 of the 6,236 verses) appears to have passed the format to the model as text in the prompt rather than enforcing it.
 
 Refusals (`status` = `refused`, reason in `detail`):
 - `gemini-3.1-flash-lite`: 46 verses, all `finish_reason=RECITATION`: Q 2:143, 2:164, 2:177, 2:258, 2:262, 2:264, 2:275, 2:282, 2:286, 3:159, 3:191, 4:1, 4:35, 4:66, 4:74, 4:75, 4:100, 4:122, 4:135, 5:3, 5:4, 5:8, 5:12, 5:33, 5:48, 6:38, 6:93, 7:32, 9:60, 9:111, 11:88, 13:3, 14:32, 16:97, 17:44, 18:57, 24:35, 30:41, 33:35, 38:26, 49:9, 49:12, 58:11, 59:7, 60:8, 73:20.
 - `gpt-4.1-mini-2025-04-14`: 1 verse, `finish_reason=content_filter`: Q 8:60.
 
-Failed answers (`status` = `parse_failed`):
-- `deepseek/deepseek-v4.1-flash`: 2 verses, Q 26:93 and 38:68, each tried 10 times. In every attempt the model used the whole 4,096-token limit on reasoning, so no complete answer was returned (`finish_reason=length`). OpenRouter lists `high` as this model's default reasoning level (checked 25 October 2026).
+Failed answers (`status` = `parse_failed`), each tried 10 times:
+- `deepseek/deepseek-v4.1-flash`: Q 26:93 and 38:68. In every attempt the model used the whole 4,096-token limit on reasoning, so no complete answer was returned (`finish_reason=length`). OpenRouter lists `high` as this model's default reasoning level (checked 25 October 2026).
+- `meta-llama/llama-3.3-70b-instruct`: Q 12:50, no JSON object in the answer.
+- `meta-llama/llama-4-maverick`: Q 27:10, answer cut off at the 4,096-token limit (`finish_reason=length`).
+
+All other verses in the 2026 files have status `ok`.
+
+### Cost
+
+The collection is run on a small research budget, so model choice is limited by price:
+
+- **Price limit:** only models priced at $15 or less per million output tokens are used at this point. This excludes the current flagship models of most companies.
+- **Batch mode** (about half price) is used where the provider offers it.
+- **Reasoning:** reasoning tokens are billed as output and can multiply the cost of a run. From Claude Sonnet 5.5 onwards the reasoning level is set to `low`. Earlier runs used the provider's default. For Claude Sonnet 5 this was an oversight: its default reasoning made the run about three times as expensive as projected.
+
+Approximate cost per run (USD, all 6,236 verses including retries). For Anthropic, OpenAI and Google the cost is estimated from the token counts and the list prices below; for OpenRouter it is the amount charged.
+
+| Model | Price per million tokens, input / output | Mode | Approx. cost |
+|---|---|---|---|
+| Claude Haiku 5.5 | $0.10 / $0.50 | batch | 0.54 |
+| GPT-5 mini | $0.25 / $2.00 | batch | 5.97 |
+| Gemini 3.1 Flash-Lite | $0.25 / $1.50 | batch | 0.80 |
+| Claude Haiku 4.5 | $1.00 / $5.00 | batch | 3.33 |
+| GPT-4.1 mini | $0.40 / $1.60 | batch | 0.65 |
+| GPT-5.6 Luna | $0.20 / $1.20 | batch | 0.71 |
+| GPT-6 Luna | $0.10 / $0.50 | batch | 0.37 |
+| DeepSeek V4.1 Flash | $0.045 / $0.50 | batch | 0.94 |
+| Llama 3.3 70B | $0.10 / $0.32 | real time | 0.75 |
+| Llama 4 Maverick | $0.19 / $0.65 | real time | 1.26 |
+| MiniMax M3 | $0.30 / $1.20 | real time | 2.08 |
+| Mistral Small 4 | $0.15 / $0.60 | real time | 0.41 |
+| Claude Sonnet 4.5 | $3.00 / $15.00 | batch | 11.23 |
+| Claude Sonnet 4.6 | $3.00 / $15.00 | batch | 11.42 |
+| Claude Sonnet 5 | $2.00 / $10.00 | batch | 16.01 |
+| Claude Sonnet 5.5 | $2.00 / $10.00 | batch | 10.63 |
+| **Total** | | | **about 67** |
+
+Prices are standard (non-batch) list prices. OpenRouter prices were checked on 29 October 2026 and may differ slightly from those at the time of collection.
 
 **File structure (2026 onwards):** UTF-8 with BOM, comma-separated, 11 columns (12 in files collected via OpenRouter, which add `served_by` at the end).
 
@@ -91,7 +141,7 @@ Failed answers (`status` = `parse_failed`):
 | `detail` | Error or refusal message, if any |
 | `model_id` | The exact model identifier used in the API request |
 | `reasoning_effort` | The reasoning level requested. `default` means none was set, so the provider's default for that model applied (the providers do not report which level that was) |
-| `reasoning_tokens` | Tokens the model spent on internal reasoning ("thinking") for the stored answer, as reported by the provider. Empty when the provider reports no count (here: `gemini-3.1-flash-lite` and `claude-haiku-4-5-20251001`); `0` means it reported none used |
+| `reasoning_tokens` | Tokens the model spent on internal reasoning ("thinking") for the stored answer, as reported by the provider. Empty when the provider reports no count (here: `gemini-3.1-flash-lite`, `claude-haiku-4-5-20251001`, `claude-sonnet-4-5-20250929` and `claude-sonnet-4-6`); `0` means it reported none used |
 | `served_by` | Only in files collected via OpenRouter: the company that actually ran the model for that verse (OpenRouter routes each request to one of several hosting companies) |
 
 ## Differences between the two collections
