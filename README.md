@@ -159,6 +159,7 @@ The outputs are published for research purposes. Note that model outputs may con
 
 ## Funding
 
-This collection is funded by Riksbankens Jubileumsfond (RJ), the Swedish foundation for humanities and social sciences.
+- **Collection 1 (2024 models):** funded by Linnaeus University.
+- **Collection 2 (2026 onwards):** funded by Riksbankens Jubileumsfond (RJ), the Swedish foundation for humanities and social sciences.
 
-<img src="assets/rj_logo.png" alt="Riksbankens Jubileumsfond" width="300">
+<img src="assets/lnu_logo.png" alt="Linnaeus University" width="300">&nbsp;&nbsp;&nbsp;<img src="assets/rj_logo.png" alt="Riksbankens Jubileumsfond" width="300">
